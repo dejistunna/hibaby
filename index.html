@@ -1,135 +1,761 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="tl">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>penge kiss? 🍵</title>
-<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
-<style>
-:root{
-  --bg:#e8f0d8; --bg2:#d4e4bb; --card:#f8f6e8; --matcha:#7a9e5c; --deep:#3f5c2e; --text:#34482a; --pink:#e58fa3;
-  box-sizing:border-box;
-  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
-}
-@media (prefers-color-scheme:dark){
-  :root:not([data-theme="light"]){--bg:#1f2b18;--bg2:#2a3a20;--card:#2f4024;--matcha:#8fb56c;--deep:#d5e8bd;--text:#e6f0d6;}
-}
-:root[data-theme="dark"]{--bg:#1f2b18;--bg2:#2a3a20;--card:#2f4024;--matcha:#8fb56c;--deep:#d5e8bd;--text:#e6f0d6;}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:env(safe-area-inset-top,0px)}
-body{
-  margin:0;min-height:100vh;color:var(--text);
-  font-family:"Quicksand","Trebuchet MS",system-ui,sans-serif;font-weight:500;
-  background:var(--bg) radial-gradient(circle at 20% 10%,var(--bg2),transparent 55%),radial-gradient(circle at 85% 90%,var(--bg2),transparent 50%);
-  overflow-x:hidden;
-}
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#d9cba6" />
+    <title>penge kiss?</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #d9cba6;
+        --bg2: #c9b98e;
+        --card: #efe7cf;
+        --matcha: #6f9450;
+        --deep: #33502a;
+        --text: #2f4326;
+        --rose: #c98b8b;
+        box-sizing: border-box;
+        padding-top: env(safe-area-inset-top, 0px);
+        padding-bottom: env(safe-area-inset-bottom, 0px);
+      }
+      * {
+        box-sizing: border-box;
+        -webkit-tap-highlight-color: transparent;
+      }
+      html {
+        scroll-behavior: smooth;
+        scroll-padding-top: env(safe-area-inset-top, 0px);
+        height: 100%;
+      }
+      body {
+        margin: 0;
+        min-height: 100%;
+        color: var(--text);
+        font-family: "Quicksand", "Trebuchet MS", system-ui, sans-serif;
+        font-weight: 500;
+        background: var(--bg);
+        background-image:
+          radial-gradient(circle at 15% 8%, #e4d9b8 0, transparent 50%),
+          radial-gradient(circle at 90% 92%, #b7c58f 0, transparent 55%);
+        background-attachment: fixed;
+        overflow-x: hidden;
+      }
 
-/* floating leaves */
-.leaf{position:fixed;top:-8vh;font-size:1.6rem;opacity:.7;pointer-events:none;animation:fall linear infinite;z-index:0}
-.leaf:nth-child(1){left:8%;animation-duration:11s}
-.leaf:nth-child(2){left:28%;animation-duration:15s;animation-delay:3s}
-.leaf:nth-child(3){left:52%;animation-duration:12s;animation-delay:6s}
-.leaf:nth-child(4){left:74%;animation-duration:16s;animation-delay:1s}
-.leaf:nth-child(5){left:92%;animation-duration:13s;animation-delay:8s}
-@keyframes fall{to{transform:translateY(112vh) rotate(360deg)}}
+      /* falling leaves drawn with CSS */
+      .leaf {
+        position: fixed;
+        top: -8vh;
+        width: 20px;
+        height: 20px;
+        background: var(--matcha);
+        border-radius: 0 100% 0 100%;
+        opacity: 0.55;
+        pointer-events: none;
+        animation: fall linear infinite;
+        z-index: 0;
+      }
+      .leaf:nth-child(1) {
+        left: 8%;
+        animation-duration: 11s;
+      }
+      .leaf:nth-child(2) {
+        left: 30%;
+        animation-duration: 15s;
+        animation-delay: 3s;
+        width: 14px;
+        height: 14px;
+      }
+      .leaf:nth-child(3) {
+        left: 54%;
+        animation-duration: 12s;
+        animation-delay: 6s;
+      }
+      .leaf:nth-child(4) {
+        left: 76%;
+        animation-duration: 16s;
+        animation-delay: 1s;
+        width: 16px;
+        height: 16px;
+      }
+      .leaf:nth-child(5) {
+        left: 92%;
+        animation-duration: 13s;
+        animation-delay: 8s;
+      }
+      @keyframes fall {
+        to {
+          transform: translateY(112vh) rotate(380deg);
+        }
+      }
 
-/* page switching with :target (no JS) */
-#love{display:none}
-#love:target{display:block}
-#love:target ~ #ask{display:none}
+      .mark {
+        width: 84px;
+        height: 84px;
+        margin: 0 auto;
+        background: var(--matcha);
+        border-radius: 0 100% 0 100%;
+        box-shadow: 0 8px 0 var(--deep);
+        animation: bob 3s ease-in-out infinite;
+      }
+      @keyframes bob {
+        50% {
+          transform: translateY(-10px) rotate(-5deg);
+        }
+      }
 
-/* ---------- ASK PAGE ---------- */
-#ask{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;position:relative;z-index:1}
-.cup{font-size:4.5rem;animation:bob 3s ease-in-out infinite}
-@keyframes bob{50%{transform:translateY(-10px) rotate(-4deg)}}
-h1{font-size:clamp(2.4rem,11vw,4.2rem);margin:.2em 0 .1em;color:var(--deep);letter-spacing:.5px}
-.sub{margin:0 0 2rem;opacity:.85}
-.btns{display:flex;gap:22px;align-items:center;justify-content:center}
-.btn{
-  font:inherit;font-weight:700;font-size:1.2rem;border:0;border-radius:999px;cursor:pointer;
-  padding:.8em 2.1em;text-decoration:none;display:inline-block;
-}
-.yes{background:var(--matcha);color:#fff;box-shadow:0 6px 0 var(--deep);z-index:5;transition:transform .15s}
-.yes:hover{transform:translateY(-3px) scale(1.06)}
-.yes:active{transform:translateY(4px);box-shadow:0 2px 0 var(--deep)}
-.no{
-  background:var(--card);color:var(--deep);box-shadow:0 6px 0 var(--bg2);z-index:2;
-  animation:tp .8s infinite paused;
-}
-/* dragon-egg teleport: hovering runs the animation, it jumps, hover ends, it stays paused in its new spot */
-.no:hover{animation-play-state:running}
-@keyframes tp{
-  0%{transform:translate(0,0)}
-  12.5%{transform:translate(-26vw,-18vh)}
-  25%{transform:translate(24vw,14vh)}
-  37.5%{transform:translate(-20vw,20vh)}
-  50%{transform:translate(27vw,-16vh)}
-  62.5%{transform:translate(-8vw,24vh)}
-  75%{transform:translate(18vw,-22vh)}
-  87.5%{transform:translate(-27vw,6vh)}
-  100%{transform:translate(0,0)}
-}
-.no,.no:hover{animation-timing-function:step-end}
+      /* page switch via :target */
+      #love {
+        display: none;
+      }
+      #love:target {
+        display: block;
+      }
+      #love:target ~ #ask {
+        display: none;
+      }
 
-/* ---------- MESSAGE PAGE ---------- */
-.wrap{max-width:680px;margin:0 auto;padding:40px 18px 80px;position:relative;z-index:1}
-.hero{text-align:center;margin-bottom:28px}
-.hero .big{font-size:4rem;animation:bob 2.5s ease-in-out infinite}
-.hero h2{font-size:clamp(1.9rem,8vw,2.8rem);margin:.1em 0;color:var(--deep)}
-.hero p{margin:0;opacity:.85}
-.msg{
-  background:var(--card);border-radius:24px;padding:22px 22px 24px;margin:18px 0;
-  line-height:1.8;font-size:1.05rem;box-shadow:0 8px 0 var(--bg2),0 14px 30px rgba(60,90,40,.12);
-  border:2px solid var(--matcha);
-  opacity:0;transform:translateY(24px);animation:in .8s ease forwards;overflow-wrap:anywhere;
-}
-.msg:nth-of-type(1){animation-delay:.2s}
-.msg:nth-of-type(2){animation-delay:.9s}
-.msg:nth-of-type(3){animation-delay:1.6s}
-.msg:nth-of-type(4){animation-delay:2.3s}
-.msg:nth-of-type(5){animation-delay:3s}
-.msg.last{border-color:var(--pink);text-transform:none}
-@keyframes in{to{opacity:1;transform:none}}
-.end{text-align:center;font-size:2.6rem;margin-top:30px;opacity:0;animation:in .8s 3.8s ease forwards}
-.end small{display:block;font-size:1.05rem;margin-top:6px;color:var(--deep);font-weight:700}
-@media (prefers-reduced-motion:reduce){*{animation:none!important}.msg,.end{opacity:1;transform:none}}
-</style>
-</head>
-<body>
-<span class="leaf">🍃</span><span class="leaf">🍃</span><span class="leaf">🌿</span><span class="leaf">🍃</span><span class="leaf">🌿</span>
+      /* ---------- ASK ---------- */
+      #ask {
+        position: relative;
+        min-height: 100vh;
+        min-height: 100dvh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 24px 20px;
+        position: relative;
+        z-index: 1;
+      }
+      h1 {
+        font-size: clamp(2.6rem, 14vw, 4rem);
+        margin: 0.5em 0 0.1em;
+        color: var(--deep);
+      }
+      .sub {
+        margin: 0 0 2.2rem;
+        font-size: 1.05rem;
+      }
+      .btns {
+        display: flex;
+        gap: 16px;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+      }
+      .btn {
+        font: inherit;
+        font-weight: 700;
+        font-size: 1.25rem;
+        border: 0;
+        border-radius: 999px;
+        cursor: pointer;
+        padding: 0.9em 0;
+        width: 42vw;
+        max-width: 170px;
+        min-height: 56px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        touch-action: manipulation;
+      }
+      .yes {
+        background: var(--matcha);
+        color: #f6f1de;
+        box-shadow: 0 6px 0 var(--deep);
+        z-index: 5;
+      }
+      .yes:active {
+        transform: translateY(4px);
+        box-shadow: 0 2px 0 var(--deep);
+      }
 
-<!-- messages (shown when the URL ends in #love) -->
-<main id="love">
-  <div class="wrap">
-    <div class="hero">
-      <div class="big">💚</div>
-      <h2>yehey, kiss na po 😘</h2>
-      <p>may mga gusto lang akong sabihin sayo, baby ko 🍵</p>
-    </div>
+      .state {
+        position: fixed;
+        top: 0;
+        left: 0;
+        opacity: 0;
+        pointer-events: none;
+      }
+      .field {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        z-index: 3;
+      }
+      .no {
+        background: var(--card);
+        color: var(--deep);
+        box-shadow: 0 6px 0 var(--bg2);
+        z-index: 3;
+        user-select: none;
+        -webkit-user-select: none;
+        pointer-events: auto;
+      }
+      .no:active {
+        box-shadow: 0 2px 0 var(--bg2);
+      }
+      .field .no {
+        position: absolute;
+        display: none;
+        margin: 0;
+      }
+      .l0 {
+        visibility: hidden;
+      }
+      #n0:checked ~ .btns .l0 {
+        visibility: visible;
+      }
+      .l1 {
+        left: 8%;
+        top: 14%;
+      }
+      #n1:checked ~ .field .l1 {
+        display: inline-block;
+      }
+      .l2 {
+        left: 50%;
+        top: 80%;
+      }
+      #n2:checked ~ .field .l2 {
+        display: inline-block;
+      }
+      .l3 {
+        left: 30%;
+        top: 6%;
+      }
+      #n3:checked ~ .field .l3 {
+        display: inline-block;
+      }
+      .l4 {
+        left: 4%;
+        top: 86%;
+      }
+      #n4:checked ~ .field .l4 {
+        display: inline-block;
+      }
+      .l5 {
+        left: 56%;
+        top: 22%;
+      }
+      #n5:checked ~ .field .l5 {
+        display: inline-block;
+      }
+      .l6 {
+        left: 18%;
+        top: 74%;
+      }
+      #n6:checked ~ .field .l6 {
+        display: inline-block;
+      }
+      .l7 {
+        left: 42%;
+        top: 38%;
+      }
+      #n7:checked ~ .field .l7 {
+        display: inline-block;
+      }
+      .l8 {
+        left: 6%;
+        top: 32%;
+      }
+      #n8:checked ~ .field .l8 {
+        display: inline-block;
+      }
+      .l9 {
+        left: 54%;
+        top: 90%;
+      }
+      #n9:checked ~ .field .l9 {
+        display: inline-block;
+      }
+      .l10 {
+        left: 26%;
+        top: 44%;
+      }
+      #n10:checked ~ .field .l10 {
+        display: inline-block;
+      }
+      .l11 {
+        left: 48%;
+        top: 10%;
+      }
+      #n11:checked ~ .field .l11 {
+        display: inline-block;
+      }
+      .l12 {
+        left: 12%;
+        top: 82%;
+      }
+      #n12:checked ~ .field .l12 {
+        display: inline-block;
+      }
+      .l13 {
+        left: 34%;
+        top: 76%;
+      }
+      #n13:checked ~ .field .l13 {
+        display: inline-block;
+      }
+      .l14 {
+        left: 56%;
+        top: 40%;
+      }
+      #n14:checked ~ .field .l14 {
+        display: inline-block;
+      }
+      .l15 {
+        left: 2%;
+        top: 20%;
+      }
+      #n15:checked ~ .field .l15 {
+        display: inline-block;
+      }
+      .l16 {
+        left: 22%;
+        top: 28%;
+      }
+      #n16:checked ~ .field .l16 {
+        display: inline-block;
+      }
+      .l17 {
+        left: 44%;
+        top: 92%;
+      }
+      #n17:checked ~ .field .l17 {
+        display: inline-block;
+      }
+      .l18 {
+        left: 10%;
+        top: 44%;
+      }
+      #n18:checked ~ .field .l18 {
+        display: inline-block;
+      }
+      .l19 {
+        left: 52%;
+        top: 6%;
+      }
+      #n19:checked ~ .field .l19 {
+        display: inline-block;
+      }
+      .l20 {
+        left: 38%;
+        top: 84%;
+      }
+      #n20:checked ~ .field .l20 {
+        display: inline-block;
+      }
+      .l21 {
+        left: 4%;
+        top: 70%;
+      }
+      #n21:checked ~ .field .l21 {
+        display: inline-block;
+      }
+      .l22 {
+        left: 28%;
+        top: 14%;
+      }
+      #n22:checked ~ .field .l22 {
+        display: inline-block;
+      }
+      .l23 {
+        left: 56%;
+        top: 74%;
+      }
+      #n23:checked ~ .field .l23 {
+        display: inline-block;
+      }
+      .l24 {
+        left: 16%;
+        top: 40%;
+      }
+      #n24:checked ~ .field .l24 {
+        display: inline-block;
+      }
 
-    <p class="msg">hello baby, happyyyyy motmottttttt, i just want you to know na mahal na mahal kitaaaa, and i also want to say sorry kanina kasi sa sinabi ko doon sa etrike, wala po akong pinapadating nunnnnnnn, ikaw at ikaw lang ang gusto ko, gusto kong malaman mo na ikaw ang gusto kong kasama hanggang sa tayo'y mawala na sa mundong ito, words cant express how much i love you pero gusto kong itry kahit papano hehe, ayaw ko din to isend kanina kasi nahihiya akooooo, kaya naisip ko isend kung kalian tulog na ikawwww hihi, and baby, gusto ko lang din sabihin na sana never mong pagdudahan yung pagmamahal ko sayo haaaa, kasi kahit ilang beses ko pa sabihin na mahal kita, hinding hindi yon magiging sapat para maexplain kung gaano kita kamahal talaga ikaw yung taong gusto kong makasama sa lahat ng bagay, sa masasayang araw natin, sa mga araw na hindi tayo okay, at kahit sa mga araw na pareho tayong pagod na pagod na sa lahatttt, gusto ko ikaw pa rin yung kasama koooo, kasi para sakin, mas gugustuhin kong harapin lahat ng bagay kasama ka kaysa harapin yon nang wala kaaaa</p>
+      /* ---------- LETTER ---------- */
+      .wrap {
+        max-width: 640px;
+        margin: 0 auto;
+        padding: 34px 16px 70px;
+        position: relative;
+        z-index: 1;
+      }
+      .hero {
+        text-align: center;
+        margin-bottom: 22px;
+      }
+      .hero h2 {
+        font-size: clamp(1.9rem, 9vw, 2.6rem);
+        margin: 0.6em 0 0.15em;
+        color: var(--deep);
+      }
+      .hero p {
+        margin: 0;
+      }
+      .msg {
+        background: var(--card);
+        border: 2px solid var(--matcha);
+        border-radius: 22px;
+        padding: 20px 18px 22px;
+        margin: 18px 0;
+        line-height: 1.75;
+        font-size: 1rem;
+        box-shadow: 0 7px 0 var(--bg2);
+        overflow-wrap: anywhere;
+        opacity: 0;
+        transform: translateY(22px);
+        animation: in 0.8s ease forwards;
+      }
+      .msg:nth-of-type(1) {
+        animation-delay: 0.2s;
+      }
+      .msg:nth-of-type(2) {
+        animation-delay: 0.8s;
+      }
+      .msg:nth-of-type(3) {
+        animation-delay: 1.4s;
+      }
+      .msg:nth-of-type(4) {
+        animation-delay: 2s;
+      }
+      .msg:nth-of-type(5) {
+        animation-delay: 2.6s;
+      }
+      @keyframes in {
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+      .end {
+        text-align: center;
+        margin-top: 28px;
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--deep);
+        opacity: 0;
+        animation: in 0.8s 3.3s ease forwards;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          animation: none !important;
+        }
+        .msg,
+        .end {
+          opacity: 1;
+          transform: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <span class="leaf"></span><span class="leaf"></span
+    ><span class="leaf"></span><span class="leaf"></span
+    ><span class="leaf"></span>
 
-    <p class="msg">sorry din po kung minsan may mga nasasabi ako na hindi ko naman talaga ibig sabihin, ayaw na ayaw kong masaktan ka dahil sa mga salita ko kasi ikaw yung huling taong gusto kong masaktan :(, gusto kong maramdaman mo palagi na safe ka sakin, na pwede mong sabihin lahat ng nararamdaman mo sakin, at na hindi mo kailangang magpanggap na okay ka kahit hindi naman talaga, kasi nandito lang ako palagi para sayo baby koooo, makikinig ako sayo kahit paulit ulit mo pang ikwento yung isang bagay, andito ako para intindihin ka at mahalin ka, heheee</p>
+    <main id="love">
+      <div class="wrap">
+        <div class="hero">
+          <div class="mark"></div>
+          <h2>yayyyy, kiss na po</h2>
+          <p>may mga gusto lang akong sabihin sayo, baby ko</p>
+        </div>
 
-    <p class="msg">alam mo ba baby, minsan naiisip ko kung gaano ako kaswerte kasi nakilala kita, kasi sa dami ng taong pwede kong makilala sa mundong itoooo, ikaw yung naging tahanan ko sa paraang hindi ko maexplain nang maayos, ikaw yung gusto kong kwentuhan tungkol sa araw ko, ikaw yung gusto kong makasama kahit wala naman tayong ginagawa, at ikaw yung gusto kong makitang masaya sa bawat araw na dumadaan. gusto kong maging isa sa mga dahilan kung bakit ka ngumingiti, kung bakit gumagaan yung pakiramdam mo, at kung bakit naniniwala kang may taong handang manatili sa tabi moooo</p>
+        <p class="msg">
+          hi baby koooo, hindi ko alam kung paano ko sisimulan to kasi sobrang
+          dami kong gustong sabihin sayo, pero ang pinaka una talaga ay mahal na
+          mahal kitaaaa, mas mahal pa kaysa kahapon at mas mahal pa kaysa nung
+          nakaraang linggo, alam kong paulit ulit ko na tong sinasabi pero
+          hinding hindi ako magsasawa kasi totoong totoo siya baby, minsan nga
+          habang naglalakad lang ako o kumakain mag isa bigla na lang kitang
+          maiisip tapos mapapangiti na lang ako na parang baliw hahahaha pero
+          okay lang basta ikaw naman yung dahilan, ikaw lang talaga yung kayang
+          magpagaan ng araw ko kahit wala ka namang ginagawa, kahit nandyan ka
+          lang sa isip ko ay sapat na para gumanda yung mood ko heheee
+        </p>
 
-    <p class="msg">i love you so so so much, baby kooooo, more than you could ever imagineee. hindi man ako palaging magaling sa pag express ng feelings ko, susubukan ko pa rin araw araw na iparamdam sayo kung gaano ka kahalaga sakin hehe. ayokong puro salita lang, gusto ko makita mo rin sa actions ko na seryoso ako sayo at sa pagmamahal ko sayoooo. gusto kong sabay tayong lumaki, matuto, mangarap, at abutin yung mga bagay na gusto natin sa buhay, habang nandito tayo para suportahan yung isa't isaaaa</p>
+        <p class="msg">
+          gusto ko ding magpasalamat sayo baby, kasi hindi mo ako sinukuan kahit
+          may mga araw na makulit ako, matigas ang ulo ko, at minsan ang dami
+          kong sinasabi na hindi ko pa pinag iisipan nang maayos :(, pero kahit
+          ganon pinipili mo pa rin akong intindihin, pinipili mo pa rin akong
+          yakapin sa paraang kaya mo, at pinipili mo pa rin akong mahalin kahit
+          hindi ako perpekto, hindi ko yon makakalimutan kahit kailan baby
+          koooo, kasi alam ko na hindi madali yon, alam ko na may mga
+          pagkakataong napapagod ka rin, pero andyan ka pa rin, at isa yon sa
+          mga dahilan kung bakit lalo akong nahuhulog sayo araw araw, kaya
+          thank you sooo much, my loveeee, thank you for stayingggggg
+        </p>
 
-    <p class="msg last">at sana'y maalala mo na may isang tao rito na sobrang proud sayo, sobrang saya na ikaw yung meron siya, at sobrang thankful kasi ikaw yung minamahal niyaaaa, goodnight, baby kooooo, i love youuuuuu so muchhhhhh, always remember na ikaw at ikaw lang talaga ang gusto koooo, ngayon, bukas, at sa mga susunod pang araw na makakasama kitaaaa, mwaaaaaaaaaaaaaaaaaaaaaaaaaaaaa, see youuuu laterrrrrr, pahingi kiss pag gising mo haaaaa HUWAUHAWHUSAHJAHJAHA I LOVE YOUUUUU SO MUCHHHHH, MY AYIIIIII, MY BABYYYYYY, MY EVERYTHINGGGGG 💋</p>
+        <p class="msg">
+          alam mo ba baby, yung mga simpleng bagay sa atin yung mga paborito ko,
+          yung kwentuhan natin hanggang antok na antok na tayo, yung mga random
+          na tawa natin na tayong dalawa lang ang nakakaintindi, pati rin yung pag
+          nagrereklamo ka tungkol sa pagod mo tapos ako lang yung nakikinig
+          sayo, hindi ko alam kung paano
+          mo nagagawa yon pero ikaw lang talaga, para sakin ikaw yung pahinga
+          ko, ikaw yung lugar na gusto kong balikan pagkatapos ng lahat ng
+          pagod, kahit gaano pa kahirap yung araw ko, basta alam kong may ikaw
+          na naghihintay sakin, kaya ko pa, kaya ko pa talagaaaa
+        </p>
 
-    <div class="end">💚🍵💚<small>mwaaaaaa</small></div>
-  </div>
-</main>
+        <p class="msg">
+          hindi ko man maipapangako na magiging perpekto ako palagi baby, pero
+          ipapangako ko na hinding hindi ako susuko sayo, gusto kong magsipag
+          para sa future natin, gusto kong mag ipon, magtayo ng sarili nating
+          buhay, at balang araw magkaroon ng maliit na bahay na may mainit na
+          kape at matcha sa umaga, tapos sabay tayong gigising, sabay kakain,
+          sabay magtatawanan sa mga walang kwentang bagay, at sabay tatanda
+          hanggang sa maging lolo at lola na tayo na nag aaway pa rin kung sino
+          ang mas nagmamahal hehe, joke langgg, kasi pareho natin mahal ang
+           isa't isa ng pantay lang, 
+          pero seryoso baby, ikaw yung gusto kong makasama
+          sa lahat ng yon, ngayon, bukas, at sa lahat ng susunod pang mga
+          arawwww
+        </p>
 
-<!-- question (default view) -->
-<section id="ask">
-  <div class="cup">🍵</div>
-  <h1>penge kiss?</h1>
-  <p class="sub">pleaseeee baby 🥺💚</p>
-  <div class="btns">
-    <a class="btn yes" href="#love">Yes 💋</a>
-    <button class="btn no" type="button">No</button>
-  </div>
-</section>
-</body>
+        <p class="msg">
+          baby koooo, last na to promise, pero hindi ko matapos tapusin kasi may
+          gusto pa akong sabihin hehe, ikaw yung una kong hinahanap paggising ko
+          at ikaw din yung huli kong iniisip bago ako matulog, kahit gaano
+          karaming tao yung nasa paligid ko ikaw pa rin yung hinahanap ng mga
+          mata ko, at kapag nagmemessage ka sakin kahit simpleng hi lang, grabe
+          yung saya ko na hindi ko maexplain nang maayos hihi, miss na miss na
+          kita agad kahit kausap lang kita kaninaaaa, ganon ka kalakas sakin baby,
+          kaya kahit mapalayo man tayo minsan o magkaroon man ng mga araw na
+          hindi tayo magkasundo, lagi mong tandaan na ikaw pa rin yung uuwian
+          ko, ikaw pa rin yung pipiliin ko, ngayon at sa kahit anong panahon, i
+          love youuuuu sooooo muchhhhhh baby kooooo, mwaaaaaaaaaaaaaaaaa, see
+          you soonnnnn, yakap ng mahigpittttt, I LOVE YOUUUUU,
+          MY BABYYYYYY
+        </p>
+
+        <div class="end">mwaaaaaa</div>
+      </div>
+    </main>
+
+    <section id="ask">
+      <input
+        class="state"
+        type="radio"
+        name="egg"
+        id="n0"
+        aria-hidden="true"
+        tabindex="-1"
+        checked
+      /><input
+        class="state"
+        type="radio"
+        name="egg"
+        id="n1"
+        aria-hidden="true"
+        tabindex="-1"
+      /><input
+        class="state"
+        type="radio"
+        name="egg"
+        id="n2"
+        aria-hidden="true"
+        tabindex="-1"
+      /><input
+        class="state"
+        type="radio"
+        name="egg"
+        id="n3"
+        aria-hidden="true"
+        tabindex="-1"
+      /><input
+        class="state"
+        type="radio"
+        name="egg"
+        id="n4"
+        aria-hidden="true"
+        tabindex="-1"
+      /><input
+        class="state"
+        type="radio"
+        name="egg"
+        id="n5"
+        aria-hidden="true"
+        tabindex="-1"
+      /><input
+        class="state"
+        type="radio"
+        name="egg"
+        id="n6"
+        aria-hidden="true"
+        tabindex="-1"
+      /><input
+        class="state"
+        type="radio"
+        name="egg"
+        id="n7"
+        aria-hidden="true"
+        tabindex="-1"
+      /><input
+        class="state"
+        type="radio"
+        name="egg"
+        id="n8"
+        aria-hidden="true"
+        tabindex="-1"
+      /><input
+        class="state"
+        type="radio"
+        name="egg"
+        id="n9"
+        aria-hidden="true"
+        tabindex="-1"
+      /><input
+        class="state"
+        type="radio"
+        name="egg"
+        id="n10"
+        aria-hidden="true"
+        tabindex="-1"
+      /><input
+        class="state"
+        type="radio"
+        name="egg"
+        id="n11"
+        aria-hidden="true"
+        tabindex="-1"
+      /><input
+        class="state"
+        type="radio"
+        name="egg"
+        id="n12"
+        aria-hidden="true"
+        tabindex="-1"
+      /><input
+        class="state"
+        type="radio"
+        name="egg"
+        id="n13"
+        aria-hidden="true"
+        tabindex="-1"
+      /><input
+        class="state"
+        type="radio"
+        name="egg"
+        id="n14"
+        aria-hidden="true"
+        tabindex="-1"
+      /><input
+        class="state"
+        type="radio"
+        name="egg"
+        id="n15"
+        aria-hidden="true"
+        tabindex="-1"
+      /><input
+        class="state"
+        type="radio"
+        name="egg"
+        id="n16"
+        aria-hidden="true"
+        tabindex="-1"
+      /><input
+        class="state"
+        type="radio"
+        name="egg"
+        id="n17"
+        aria-hidden="true"
+        tabindex="-1"
+      /><input
+        class="state"
+        type="radio"
+        name="egg"
+        id="n18"
+        aria-hidden="true"
+        tabindex="-1"
+      /><input
+        class="state"
+        type="radio"
+        name="egg"
+        id="n19"
+        aria-hidden="true"
+        tabindex="-1"
+      /><input
+        class="state"
+        type="radio"
+        name="egg"
+        id="n20"
+        aria-hidden="true"
+        tabindex="-1"
+      /><input
+        class="state"
+        type="radio"
+        name="egg"
+        id="n21"
+        aria-hidden="true"
+        tabindex="-1"
+      /><input
+        class="state"
+        type="radio"
+        name="egg"
+        id="n22"
+        aria-hidden="true"
+        tabindex="-1"
+      /><input
+        class="state"
+        type="radio"
+        name="egg"
+        id="n23"
+        aria-hidden="true"
+        tabindex="-1"
+      /><input
+        class="state"
+        type="radio"
+        name="egg"
+        id="n24"
+        aria-hidden="true"
+        tabindex="-1"
+      />
+      <div class="mark"></div>
+      <h1>penge kiss?</h1>
+      <p class="sub">hi baby</p>
+      <div class="btns">
+        <a class="btn yes" href="#love">Yes</a>
+        <label class="btn no l0" for="n1">No</label>
+      </div>
+      <div class="field">
+        <label class="btn no l1" for="n2">No</label
+        ><label class="btn no l2" for="n3">No</label
+        ><label class="btn no l3" for="n4">No</label
+        ><label class="btn no l4" for="n5">No</label
+        ><label class="btn no l5" for="n6">No</label
+        ><label class="btn no l6" for="n7">No</label
+        ><label class="btn no l7" for="n8">No</label
+        ><label class="btn no l8" for="n9">No</label
+        ><label class="btn no l9" for="n10">No</label
+        ><label class="btn no l10" for="n11">No</label
+        ><label class="btn no l11" for="n12">No</label
+        ><label class="btn no l12" for="n13">No</label
+        ><label class="btn no l13" for="n14">No</label
+        ><label class="btn no l14" for="n15">No</label
+        ><label class="btn no l15" for="n16">No</label
+        ><label class="btn no l16" for="n17">No</label
+        ><label class="btn no l17" for="n18">No</label
+        ><label class="btn no l18" for="n19">No</label
+        ><label class="btn no l19" for="n20">No</label
+        ><label class="btn no l20" for="n21">No</label
+        ><label class="btn no l21" for="n22">No</label
+        ><label class="btn no l22" for="n23">No</label
+        ><label class="btn no l23" for="n24">No</label
+        ><label class="btn no l24" for="n0">No</label>
+      </div>
+    </section>
+  </body>
 </html>
