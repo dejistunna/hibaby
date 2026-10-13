@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="tl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>penge kiss? 🍵</title>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#e8f0d8; --bg2:#d4e4bb; --card:#f8f6e8; --matcha:#7a9e5c; --deep:#3f5c2e; --text:#34482a; --pink:#e58fa3;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){--bg:#1f2b18;--bg2:#2a3a20;--card:#2f4024;--matcha:#8fb56c;--deep:#d5e8bd;--text:#e6f0d6;}
+}
+:root[data-theme="dark"]{--bg:#1f2b18;--bg2:#2a3a20;--card:#2f4024;--matcha:#8fb56c;--deep:#d5e8bd;--text:#e6f0d6;}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{
+  margin:0;min-height:100vh;color:var(--text);
+  font-family:"Quicksand","Trebuchet MS",system-ui,sans-serif;font-weight:500;
+  background:var(--bg) radial-gradient(circle at 20% 10%,var(--bg2),transparent 55%),radial-gradient(circle at 85% 90%,var(--bg2),transparent 50%);
+  overflow-x:hidden;
+}
+
+/* floating leaves */
+.leaf{position:fixed;top:-8vh;font-size:1.6rem;opacity:.7;pointer-events:none;animation:fall linear infinite;z-index:0}
+.leaf:nth-child(1){left:8%;animation-duration:11s}
+.leaf:nth-child(2){left:28%;animation-duration:15s;animation-delay:3s}
+.leaf:nth-child(3){left:52%;animation-duration:12s;animation-delay:6s}
+.leaf:nth-child(4){left:74%;animation-duration:16s;animation-delay:1s}
+.leaf:nth-child(5){left:92%;animation-duration:13s;animation-delay:8s}
+@keyframes fall{to{transform:translateY(112vh) rotate(360deg)}}
+
+/* page switching with :target (no JS) */
+#love{display:none}
+#love:target{display:block}
+#love:target ~ #ask{display:none}
+
+/* ---------- ASK PAGE ---------- */
+#ask{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;position:relative;z-index:1}
+.cup{font-size:4.5rem;animation:bob 3s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-10px) rotate(-4deg)}}
+h1{font-size:clamp(2.4rem,11vw,4.2rem);margin:.2em 0 .1em;color:var(--deep);letter-spacing:.5px}
+.sub{margin:0 0 2rem;opacity:.85}
+.btns{display:flex;gap:22px;align-items:center;justify-content:center}
+.btn{
+  font:inherit;font-weight:700;font-size:1.2rem;border:0;border-radius:999px;cursor:pointer;
+  padding:.8em 2.1em;text-decoration:none;display:inline-block;
+}
+.yes{background:var(--matcha);color:#fff;box-shadow:0 6px 0 var(--deep);z-index:5;transition:transform .15s}
+.yes:hover{transform:translateY(-3px) scale(1.06)}
+.yes:active{transform:translateY(4px);box-shadow:0 2px 0 var(--deep)}
+.no{
+  background:var(--card);color:var(--deep);box-shadow:0 6px 0 var(--bg2);z-index:2;
+  animation:tp .8s infinite paused;
+}
+/* dragon-egg teleport: hovering runs the animation, it jumps, hover ends, it stays paused in its new spot */
+.no:hover{animation-play-state:running}
+@keyframes tp{
+  0%{transform:translate(0,0)}
+  12.5%{transform:translate(-26vw,-18vh)}
+  25%{transform:translate(24vw,14vh)}
+  37.5%{transform:translate(-20vw,20vh)}
+  50%{transform:translate(27vw,-16vh)}
+  62.5%{transform:translate(-8vw,24vh)}
+  75%{transform:translate(18vw,-22vh)}
+  87.5%{transform:translate(-27vw,6vh)}
+  100%{transform:translate(0,0)}
+}
+.no,.no:hover{animation-timing-function:step-end}
+
+/* ---------- MESSAGE PAGE ---------- */
+.wrap{max-width:680px;margin:0 auto;padding:40px 18px 80px;position:relative;z-index:1}
+.hero{text-align:center;margin-bottom:28px}
+.hero .big{font-size:4rem;animation:bob 2.5s ease-in-out infinite}
+.hero h2{font-size:clamp(1.9rem,8vw,2.8rem);margin:.1em 0;color:var(--deep)}
+.hero p{margin:0;opacity:.85}
+.msg{
+  background:var(--card);border-radius:24px;padding:22px 22px 24px;margin:18px 0;
+  line-height:1.8;font-size:1.05rem;box-shadow:0 8px 0 var(--bg2),0 14px 30px rgba(60,90,40,.12);
+  border:2px solid var(--matcha);
+  opacity:0;transform:translateY(24px);animation:in .8s ease forwards;overflow-wrap:anywhere;
+}
+.msg:nth-of-type(1){animation-delay:.2s}
+.msg:nth-of-type(2){animation-delay:.9s}
+.msg:nth-of-type(3){animation-delay:1.6s}
+.msg:nth-of-type(4){animation-delay:2.3s}
+.msg:nth-of-type(5){animation-delay:3s}
+.msg.last{border-color:var(--pink);text-transform:none}
+@keyframes in{to{opacity:1;transform:none}}
+.end{text-align:center;font-size:2.6rem;margin-top:30px;opacity:0;animation:in .8s 3.8s ease forwards}
+.end small{display:block;font-size:1.05rem;margin-top:6px;color:var(--deep);font-weight:700}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}.msg,.end{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<span class="leaf">🍃</span><span class="leaf">🍃</span><span class="leaf">🌿</span><span class="leaf">🍃</span><span class="leaf">🌿</span>
+
+<!-- messages (shown when the URL ends in #love) -->
+<main id="love">
+  <div class="wrap">
+    <div class="hero">
+      <div class="big">💚</div>
+      <h2>yehey, kiss na po 😘</h2>
+      <p>may mga gusto lang akong sabihin sayo, baby ko 🍵</p>
+    </div>
+
+    <p class="msg">hello baby, happyyyyy motmottttttt, i just want you to know na mahal na mahal kitaaaa, and i also want to say sorry kanina kasi sa sinabi ko doon sa etrike, wala po akong pinapadating nunnnnnnn, ikaw at ikaw lang ang gusto ko, gusto kong malaman mo na ikaw ang gusto kong kasama hanggang sa tayo'y mawala na sa mundong ito, words cant express how much i love you pero gusto kong itry kahit papano hehe, ayaw ko din to isend kanina kasi nahihiya akooooo, kaya naisip ko isend kung kalian tulog na ikawwww hihi, and baby, gusto ko lang din sabihin na sana never mong pagdudahan yung pagmamahal ko sayo haaaa, kasi kahit ilang beses ko pa sabihin na mahal kita, hinding hindi yon magiging sapat para maexplain kung gaano kita kamahal talaga ikaw yung taong gusto kong makasama sa lahat ng bagay, sa masasayang araw natin, sa mga araw na hindi tayo okay, at kahit sa mga araw na pareho tayong pagod na pagod na sa lahatttt, gusto ko ikaw pa rin yung kasama koooo, kasi para sakin, mas gugustuhin kong harapin lahat ng bagay kasama ka kaysa harapin yon nang wala kaaaa</p>
+
+    <p class="msg">sorry din po kung minsan may mga nasasabi ako na hindi ko naman talaga ibig sabihin, ayaw na ayaw kong masaktan ka dahil sa mga salita ko kasi ikaw yung huling taong gusto kong masaktan :(, gusto kong maramdaman mo palagi na safe ka sakin, na pwede mong sabihin lahat ng nararamdaman mo sakin, at na hindi mo kailangang magpanggap na okay ka kahit hindi naman talaga, kasi nandito lang ako palagi para sayo baby koooo, makikinig ako sayo kahit paulit ulit mo pang ikwento yung isang bagay, andito ako para intindihin ka at mahalin ka, heheee</p>
+
+    <p class="msg">alam mo ba baby, minsan naiisip ko kung gaano ako kaswerte kasi nakilala kita, kasi sa dami ng taong pwede kong makilala sa mundong itoooo, ikaw yung naging tahanan ko sa paraang hindi ko maexplain nang maayos, ikaw yung gusto kong kwentuhan tungkol sa araw ko, ikaw yung gusto kong makasama kahit wala naman tayong ginagawa, at ikaw yung gusto kong makitang masaya sa bawat araw na dumadaan. gusto kong maging isa sa mga dahilan kung bakit ka ngumingiti, kung bakit gumagaan yung pakiramdam mo, at kung bakit naniniwala kang may taong handang manatili sa tabi moooo</p>
+
+    <p class="msg">i love you so so so much, baby kooooo, more than you could ever imagineee. hindi man ako palaging magaling sa pag express ng feelings ko, susubukan ko pa rin araw araw na iparamdam sayo kung gaano ka kahalaga sakin hehe. ayokong puro salita lang, gusto ko makita mo rin sa actions ko na seryoso ako sayo at sa pagmamahal ko sayoooo. gusto kong sabay tayong lumaki, matuto, mangarap, at abutin yung mga bagay na gusto natin sa buhay, habang nandito tayo para suportahan yung isa't isaaaa</p>
+
+    <p class="msg last">at sana'y maalala mo na may isang tao rito na sobrang proud sayo, sobrang saya na ikaw yung meron siya, at sobrang thankful kasi ikaw yung minamahal niyaaaa, goodnight, baby kooooo, i love youuuuuu so muchhhhhh, always remember na ikaw at ikaw lang talaga ang gusto koooo, ngayon, bukas, at sa mga susunod pang araw na makakasama kitaaaa, mwaaaaaaaaaaaaaaaaaaaaaaaaaaaaa, see youuuu laterrrrrr, pahingi kiss pag gising mo haaaaa HUWAUHAWHUSAHJAHJAHA I LOVE YOUUUUU SO MUCHHHHH, MY AYIIIIII, MY BABYYYYYY, MY EVERYTHINGGGGG 💋</p>
+
+    <div class="end">💚🍵💚<small>mwaaaaaa</small></div>
+  </div>
+</main>
+
+<!-- question (default view) -->
+<section id="ask">
+  <div class="cup">🍵</div>
+  <h1>penge kiss?</h1>
+  <p class="sub">pleaseeee baby 🥺💚</p>
+  <div class="btns">
+    <a class="btn yes" href="#love">Yes 💋</a>
+    <button class="btn no" type="button">No</button>
+  </div>
+</section>
+</body>
+</html>
